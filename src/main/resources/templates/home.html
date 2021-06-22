@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/main_template}"
+>
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
 <body>
-<h1 th:text="#{common.homeWelcome}"> Image Shop에 오신 것을 환영합니다.</h1>
-<p th:text="|The time on the server is ${serverTime}|">서버 시간</p>
+<div layout:fragment="content">
+    <h1 th:text="#{common.homeWelcome}"> Image Shop에 오신 것을 환영합니다.</h1>
+    <p th:text="|The time on the server is ${serverTime}|">서버 시간</p>
+</div>
 </body>
 </html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <script crossorigin="anonymous"
+          integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="
+          src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <title>Main</title>
+</head>
+<body>
+<div th:replace="~{fragments/header::header}">
+</div>
+<hr>
+<div th:replace="~{fragments/menu::menu}"></div>
+<hr>
+<div layout:fragment="content"></div>
+<div th:replace="~{fragments/footer::footer}"></div>
+<hr>
+</body>
+</html>
