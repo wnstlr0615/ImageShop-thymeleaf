@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main_template}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>CodeGroup</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <h2 th:text="#{codegroup.header.register}"> 코드그룹 등록</h2>
+  <form action="list.html" id="codeGroup" th:action="@{/codeGroup/register}" th:object="${codeGroup}" method="post">
+    <table>
+      <tr>
+        <td th:text="#{codegroup.groupCode}">코드그룹코드</td>
+        <td><input type="text" name="groupCode" th:field="*{groupCode}"></td>
+        <td><span class="error_message" th:if="${#fields.hasErrors('groupCode')}">Group Code의 에러 메시지</span></td>
+      </tr>
+      <tr>
+        <td th:text="#{codegroup.groupName}">코드그룹명</td>
+        <td><input type="text" name="groupCode" th:field="*{groupName}"></td>
+        <td><span class="error_message" th:if="${#fields.hasErrors('groupName')}">Group Name의 에러 메시지</span></td>
+      </tr>
+    </table>
+  </form>
+  <div>
+    <button type="submit" id="btnRegister" th:text="#{action.register}">등록</button>
+    <button type="submit" id="btnList" th:text="#{action.list}">목록</button>
+  </div>
+  <script>
+    $(document).ready(function(){
+      let formObj=$("#codeGroup");
+      $("#btnRegister").on("click", function(){
+        formObj.submit();
+      });
+      $("#btnList").on("click", function (){
+        console.log("click");
+        self.location="list";
+      });
+    });
+  </script>
+</div>
+
+</body>
+
+</html>

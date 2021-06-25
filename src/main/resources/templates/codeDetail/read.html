@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko"
+      layout:decorate="~{layouts/main_template}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>CodeDetail</title>
+    <link href="/static/css/main.css" rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content">
+    <h2 th:text="#{codeDetail.header.read}"> 코드 상세보기</h2>
+    <form action="list.html" id="codeDetail" method="post" th:action="@{/codeDetail/remove}" th:object="${codeDetail}">
+        <table>
+            <tr>
+                <td th:text="#{codedetail.groupCode}"></td>
+                <td><select th:field="*{groupCode}">
+                    <option th:each="groupCode:${groupCodeList}" th:text="${groupCode.label}"
+                            th:value="${groupCode.value}"></option>
+                </select></td>
+            </tr>
+            <tr>
+                <td th:text="#{codedetail.codeValue}">코드 값</td>
+                <td><input name="codeValue" readonly th:field="*{codeValue}" type="text"></td>
+            </tr>
+            <tr>
+                <td th:text="#{codedetail.codeName}">코드 명</td>
+                <td><input name="codeName" readonly th:field="*{codeName}" type="text"></td>
+            </tr>
+        </table>
+    </form>
+    <div>
+        <button id="btnEdit" th:text="#{action.edit}" type="submit">편집</button>
+        <button id="btnRemove" th:text="#{action.remove}" type="submit">삭제</button>
+        <button id="btnList" th:text="#{action.list}" type="submit">목록</button>
+    </div>
+    <script>
+        $(document).ready(function () {
+            let formObj = $("#codeDetail")
+            $("#btnEdit").on("click", function () {
+                let groupCode = $("#groupCode");
+                let groupCodeVal = groupCode.val();
+                let codeValue = $("#codeValue");
+                let codeValueVal=codeValue.val();
+                self.location = "modify?groupCode=" + groupCodeVal +"&codeValue="+codeValueVal;
+            });
+            $("#btnRemove").on("click", function () {
+                console.log("remove");
+                formObj.submit();
+            });
+            $("#btnList").on("click", function () {
+                self.location = "list";
+            });
+        });
+    </script>
+
+
+</div>
+</body>
+
+</html>

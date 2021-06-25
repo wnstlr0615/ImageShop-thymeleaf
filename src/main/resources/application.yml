@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:h2:tcp://localhost/~/ImageShop
     driver-class-name: org.h2.Driver
-    name: sa
+    username: sa
     password:
   jpa:
     hibernate:
@@ -13,4 +13,4 @@ spring:
         format_sql: true
 
 logging.level:
-  org.hibernate.SQL:debug
+  org.hibernate.SQL: debug
