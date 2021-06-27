@@ -4,6 +4,7 @@ import com.joon.imageshopthymeleaf.entity.CodeDetail;
 import com.joon.imageshopthymeleaf.entity.CodeGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CodeDetailRepository extends JpaRepository<CodeDetail, Long> {
@@ -12,4 +13,8 @@ public interface CodeDetailRepository extends JpaRepository<CodeDetail, Long> {
     Optional<CodeDetail> findByCodeGroupAndCodeValue(CodeGroup codeGroup, String codeValue);
 
     void deleteByCodeGroupAndCodeValue(CodeGroup codeGroup, String codeValue);
+
+    List<CodeDetail> findAllByCodeGroup(CodeGroup codeGroup);
+
+    Optional<CodeDetail> findByCodeName(String job);
 }

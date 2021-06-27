@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+>
 <body>
-<div th:fragment="header">
-  <table>
-    <tr>
-      <td><a href="/user/register" th:text="#{header.joinMember}"></a></td></tr>
-  </table>
+<div align="right" th:fragment="header">
+    <table>
+        <tr sec:authorize="!isAuthenticated()">
+            <td><a href="../user/register.html" th:href="@{/user/register.html}" th:text="#{header.joinMember}">회원가입</a></td>
+            <td><a href="../auth/loginForm.html" th:href="@{/auth/login}" th:text="#{auth.header.login}">로그인</a></td>
+        </tr>
+        <tr sec:authorize="isAuthenticated()">
+            <td><span sec:authentication="principal.username">홍길동</span>님</td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

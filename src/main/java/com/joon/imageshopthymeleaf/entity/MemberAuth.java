@@ -1,12 +1,10 @@
 package com.joon.imageshopthymeleaf.entity;
 
 import com.joon.imageshopthymeleaf.common.entity.BaseTimeEntity;
+import com.joon.imageshopthymeleaf.common.model.Auth;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @EqualsAndHashCode(callSuper = false)
@@ -16,21 +14,13 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @Builder
 public class MemberAuth extends BaseTimeEntity {
-    @Id @GeneratedValue
-    private Long memberAuthId;
+   @Id @GeneratedValue
+    private Long memberAuthID;
 
-    @NotBlank
-    @Column(length = 50, nullable = false)
-    private String userId;
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "memberId")
+   private Member member;
 
-    @Column(length = 200,  nullable = false)
-    private String userPw;
-
-    @NotBlank
-    @Column(length = 100, nullable = false)
-    private String userName;
-
-    @Column(length = 3, nullable = false)
-    private String job;
-    private int coin;
+   @Enumerated(EnumType.STRING)
+   private Auth auth;
 }

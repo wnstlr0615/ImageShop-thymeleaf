@@ -1,6 +1,7 @@
 package com.joon.imageshopthymeleaf.service.impl;
 
 import com.joon.imageshopthymeleaf.common.exception.NotFoundGroupCodeException;
+import com.joon.imageshopthymeleaf.common.model.CodeLabelValue;
 import com.joon.imageshopthymeleaf.dto.CodeDetailDto;
 import com.joon.imageshopthymeleaf.entity.CodeDetail;
 import com.joon.imageshopthymeleaf.entity.CodeGroup;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -54,6 +56,13 @@ public class CodeDetailServiceImpl implements CodeDetailService {
         CodeGroup codeGroup = findCodeGroup(codeDetailDto.getGroupCode());
         CodeDetail codeDetail = codeDetailRepository.findByCodeGroupAndCodeValue(codeGroup, codeDetailDto.getCodeValue()).orElseThrow(() -> new NotFoundGroupCodeException("없는 코드입니다."));
         codeDetail.update(codeGroup, codeDetailDto.getCodeName(), codeDetailDto.getCodeValue());
+    }
+
+    @Override
+    public List<CodeLabelValue> getCodeList(String classCode) {
+        CodeGroup codeGroup = findCodeGroup(classCode);
+        List<CodeDetail> codeDetails = codeDetailRepository.findAllByCodeGroup(codeGroup);
+        return codeDetails.stream().map(c->new CodeLabelValue(c.getCodeValue(), c.getCodeName())).collect(Collectors.toList());
     }
 
     private CodeGroup findCodeGroup(String groupCode) {
