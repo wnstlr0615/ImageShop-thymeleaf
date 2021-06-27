@@ -17,8 +17,5 @@ public class LoginController {
         }
         return "/auth/loginForm";
     }
-    @PostMapping("/login")
-    public String login(String username, String password, boolean rememberMe){
-        return "";
-    }
+
 }

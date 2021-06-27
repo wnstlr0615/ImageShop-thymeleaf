@@ -8,6 +8,7 @@ import com.joon.imageshopthymeleaf.service.CodeDetailService;
 import com.joon.imageshopthymeleaf.service.CodeGroupService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/codeDetail")
 @Log
+@PreAuthorize("hasRole('ADMIN')")
 public class CodeDetailController {
     private final CodeDetailService codeDetailService;
     private final CodeGroupService codeGroupService;

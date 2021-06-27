@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 @EnableJpaAuditing
-@EnableWebSecurity
 public class ImageShopThymeleafApplication {
 
     public static void main(String[] args) {

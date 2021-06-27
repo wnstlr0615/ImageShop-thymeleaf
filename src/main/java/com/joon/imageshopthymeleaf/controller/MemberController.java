@@ -7,6 +7,7 @@ import com.joon.imageshopthymeleaf.entity.Member;
 import com.joon.imageshopthymeleaf.service.CodeDetailService;
 import com.joon.imageshopthymeleaf.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -48,7 +49,9 @@ public class MemberController {
     public String registerSuccess(){
         return "/user/registerSuccess";
     }
+
     @GetMapping("/list")
+    @PreAuthorize("hasRole('ADMIN')")
     public String list(Model model){
         model.addAttribute("list", memberService.list());
         return "/user/list";
@@ -63,6 +66,7 @@ public class MemberController {
         return "/user/read";
     }
     @PostMapping("/remove")
+    @PreAuthorize("hasRole('ADMIN')")
     public String remove(long memberId, RedirectAttributes rttr){
         memberService.remove(memberId);
         rttr.addFlashAttribute("msg", "SUCCESS");
