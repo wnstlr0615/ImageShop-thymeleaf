@@ -29,7 +29,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/register")
-    @PreAuthorize("hasRole('MEMBER')")
+    @PreAuthorize("hasRole('ROLE_MEMBER')")
     public String registerForm(Model model, Authentication authentication){
         CustomUser customUser = (CustomUser) authentication.getPrincipal();
         Member member = customUser.getMember();

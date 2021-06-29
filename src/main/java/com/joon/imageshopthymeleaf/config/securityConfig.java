@@ -1,5 +1,6 @@
 package com.joon.imageshopthymeleaf.config;
 
+import com.joon.imageshopthymeleaf.common.model.Auth;
 import com.joon.imageshopthymeleaf.common.security.CustomAccessDeniedHandler;
 import com.joon.imageshopthymeleaf.common.security.CustomLoginSuccessHandler;
 import com.joon.imageshopthymeleaf.common.security.CustomUserDetailsService;
@@ -41,6 +42,8 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/board/list", "/board/read").permitAll()
                 .antMatchers("/board/remove").hasAnyRole("MEMBER", "ADMIN")
                 .antMatchers("/board/**").hasRole("MEMBER")
+                .antMatchers("/notice/list", "/notice/read/**").permitAll()
+                .antMatchers("/notice/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
 

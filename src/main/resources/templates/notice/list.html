@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorator="~{/layouts/main_template}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>notice</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h2 th:text="#{notice.header.list}"> 공지사항 목록</h2>
+    <th:block sec:authorize="hasRole('ADMIN')">
+        <a href="./register.html" th:href="@{/notice/register}" th:text="#{action.new}">새로 만들기</a>
+    </th:block>
+    <table border="1">
+        <tr>
+            <th th:text="#{notice.no}" width="80px">번호</th>
+            <th th:text="#{notice.title}" width="320px">제목</th>
+            <th th:text="#{notice.regdate}" width="180px">등록 일시</th>
+        </tr>
+        <tr th:if="${#lists.isEmpty(noticeList)}">
+            <td colspan="3" th:text="#{common.listEmpty}"></td>
+        </tr>
+        <tr th:each="list:${noticeList}">
+            <td th:text="${list.noticeId}">${list.noticeId}</td>
+            <td><a th:href="|/notice/read/?noticeId=${list.noticeId}|" th:text="${list.title}">${list.title}</a></td>
+            <td th:text="${#temporals.format(list.createDate, 'yyyy-MM-dd HH:mm')}">${list.creatDate}</td>
+        </tr>
+    </table>
+    <script th:inline="javascript">
+        let result = [[${msg}]];
+        if (result === "SUCCESS") {
+            alert([[#{common.processSuccess}]]);
+        } else if (result != null) {
+            alert(result);
+        }
+    </script>
+</div>
+</body>
+</html>
