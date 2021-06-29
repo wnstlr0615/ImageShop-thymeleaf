@@ -1,13 +1,13 @@
 package com.joon.imageshopthymeleaf.service;
 
+import com.joon.imageshopthymeleaf.controller.vo.PageRequestVO;
 import com.joon.imageshopthymeleaf.entity.Board;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface BoardService {
     void register(Board board);
 
-    List<Board> list();
+    Page<Board> list(PageRequestVO pageRequestVO);
 
     Board read(Long boardNo);
 

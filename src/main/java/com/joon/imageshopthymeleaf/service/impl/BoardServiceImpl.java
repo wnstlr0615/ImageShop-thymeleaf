@@ -1,21 +1,25 @@
 package com.joon.imageshopthymeleaf.service.impl;
 
+import com.joon.imageshopthymeleaf.controller.vo.PageRequestVO;
 import com.joon.imageshopthymeleaf.entity.Board;
 import com.joon.imageshopthymeleaf.repository.BoardRepository;
+import com.joon.imageshopthymeleaf.repository.CustomBoardRepository;
 import com.joon.imageshopthymeleaf.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class BoardServiceImpl  implements BoardService {
-    private final BoardRepository boardRepository;
 
+    private final BoardRepository boardRepository;
+    private final CustomBoardRepository customBoardRepository;
     @Override
     @Transactional
     public void register(Board board) {
@@ -23,8 +27,17 @@ public class BoardServiceImpl  implements BoardService {
     }
 
     @Override
-    public List<Board> list() {
-        return boardRepository.findAll(Sort.by(Sort.Direction.DESC, "boardNo"));
+    public Page<Board> list(PageRequestVO pageRequestVO) {
+      /*  int pageNumber=pageRequestVO.getPage()-1;
+        int sizePerPage=pageRequestVO.getSizePerPage();
+        Pageable pageRequest= PageRequest.of(pageNumber, sizePerPage, Sort.Direction.DESC, "boardNo");
+        return boardRepository.findAll(pageRequest);*/
+        String searchType= pageRequestVO.getSearchType();
+        String keyword = pageRequestVO.getKeyword();
+        int pageNumber=pageRequestVO.getPage()-1;
+        int sizePerPage= pageRequestVO.getSizePerPage();
+        PageRequest pageRequest=PageRequest.of(pageNumber, sizePerPage, Sort.Direction.DESC, "boardNo");
+        return customBoardRepository.getSearchPage(searchType, keyword, pageRequest);
     }
 
     @Override
