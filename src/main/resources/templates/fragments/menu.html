@@ -18,11 +18,12 @@
           <td><a href="../user/list.html" th:href="@{/user/list}" th:text="#{menu.user.admin}">회원 관리</a></td>
           <td><a href="../board/list.html" th:href="@{/board/list}" th:text="#{menu.board.admin}">회원 게시판 관리</a></td>
           <td><a href="../notice/list" th:href="@{/notice/list}" th:text="#{menu.notice.admin}">공지사항 관리</a></td>
+          <td width="120"><a href="../item/list.html" th:href="@{/item/list}" th:text="#{menu.item.admin}">상품관리</a></td>
         </th:block>
         <th:block sec:authorize="hasRole('MEMBER')">
           <td><a href="../board/list.html" th:href="@{/board/list}" th:text="#{menu.board.member}">회원 게시판</a></td>
           <td><a href="../notice/list" th:href="@{/notice/list}" th:text="#{menu.notice.member}">공지사항</a></td>
-
+          <td width="120"><a href="../item/list.html" th:href="@{/item/list}" th:text="#{menu.item.member}">상품</a></td>
         </th:block>
       </th:block>
 
