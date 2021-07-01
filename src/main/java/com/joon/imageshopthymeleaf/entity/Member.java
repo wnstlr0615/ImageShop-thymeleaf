@@ -44,5 +44,9 @@ public class Member extends BaseTimeEntity {
         this.userName=userName;
         this.job=job;
     }
+
+    public void addCoin(int amount) {
+        this.coin+=amount;
+    }
 }
 
