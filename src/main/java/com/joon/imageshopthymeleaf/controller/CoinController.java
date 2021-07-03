@@ -3,6 +3,7 @@ package com.joon.imageshopthymeleaf.controller;
 import com.joon.imageshopthymeleaf.common.security.domain.CustomUser;
 import com.joon.imageshopthymeleaf.entity.ChargeCoin;
 import com.joon.imageshopthymeleaf.entity.Member;
+import com.joon.imageshopthymeleaf.entity.PayCoin;
 import com.joon.imageshopthymeleaf.service.CoinService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -56,5 +57,12 @@ public class CoinController {
         List<ChargeCoin> chargeCoinList =coinService.list(customUser.getMember());
         model.addAttribute("list", chargeCoinList);
         return "/coin/list";
+    }
+    @GetMapping("/listPay")
+    public String listPayHistory(Model model, Authentication authentication){
+        Member member = ((CustomUser) authentication.getPrincipal()).getMember();
+        List<PayCoin> payCoins = coinService.listPayHistory(member);
+        model.addAttribute("list", payCoins);
+        return "/coin/listPay";
     }
 }

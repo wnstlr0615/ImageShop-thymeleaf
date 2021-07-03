@@ -6,12 +6,10 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Setter
-@ToString
+@Data
 public class Notice extends BaseTimeEntity {
     @Id
     @GeneratedValue

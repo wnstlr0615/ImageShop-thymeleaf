@@ -48,5 +48,13 @@ public class Member extends BaseTimeEntity {
     public void addCoin(int amount) {
         this.coin+=amount;
     }
+
+    public boolean buyItem(Item item) {
+        if(item.getPrice()>this.coin) {
+            return false;
+        }
+        this.coin-= item.getPrice();
+        return true;
+    }
 }
 

@@ -2,8 +2,10 @@ package com.joon.imageshopthymeleaf.service.impl;
 
 import com.joon.imageshopthymeleaf.entity.ChargeCoin;
 import com.joon.imageshopthymeleaf.entity.Member;
+import com.joon.imageshopthymeleaf.entity.PayCoin;
 import com.joon.imageshopthymeleaf.repository.CoinRepository;
 import com.joon.imageshopthymeleaf.repository.MemberRepository;
+import com.joon.imageshopthymeleaf.repository.PayCoinRepository;
 import com.joon.imageshopthymeleaf.service.CoinService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.util.List;
 public class CoinServiceImpl implements CoinService {
     private final CoinRepository coinRepository;
     private final MemberRepository memberRepository;
+    private final PayCoinRepository payCoinRepository;
 
     @Override
     @Transactional
@@ -33,5 +36,11 @@ public class CoinServiceImpl implements CoinService {
     @Override
     public List<ChargeCoin> list(Member member) {
         return coinRepository.findAllByMemberId(member.getMemberId());
+    }
+
+    @Override
+    public List<PayCoin> listPayHistory(Member member) {
+        List<PayCoin> payCoins = payCoinRepository.findAllByMemberId(member.getMemberId());
+        return payCoins;
     }
 }

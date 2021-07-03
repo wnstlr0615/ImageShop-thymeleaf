@@ -1,20 +1,25 @@
 package com.joon.imageshopthymeleaf.controller;
 
+import com.joon.imageshopthymeleaf.common.security.domain.CustomUser;
 import com.joon.imageshopthymeleaf.entity.Item;
+import com.joon.imageshopthymeleaf.entity.Member;
 import com.joon.imageshopthymeleaf.service.ItemService;
+import com.joon.imageshopthymeleaf.service.UserItemService;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.springframework.boot.autoconfigure.context.MessageSourceProperties;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +33,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.File;
 import java.io.InputStream;
+import java.security.Principal;
+import java.util.Locale;
 import java.util.UUID;
 
 @Controller
@@ -38,6 +45,8 @@ public class ItemController {
     private final ItemService itemService;
     @Value("${upload.path}")
     private String uploadPath;
+    private final UserItemService userItemService;
+    private final MessageSource messageSource;
 
     @GetMapping("/register")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -179,5 +188,30 @@ public class ItemController {
         }
 
         return null;
+    }
+
+    @PostMapping("/buy")
+    public String buy(Long itemId, RedirectAttributes rttr, Authentication authentication){
+        CustomUser customUser = (CustomUser) authentication.getPrincipal();
+        Member member = customUser.getMember();
+        try {//TODO 오류 처리 제대로 하기
+            userItemService.register(member, itemId);
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            rttr.addFlashAttribute("msg", e.getMessage());
+            return "redirect:/item/fail";
+        }
+        log.info("구매 성공");
+        String msg=messageSource.getMessage("item.purchaseComplete", null, Locale.KOREAN);
+        rttr.addFlashAttribute("msg", msg);
+        return "redirect:/item/success";
+    }
+    @GetMapping("/success")
+    public String success(){
+        return "/item/success";
+    }
+    @GetMapping("/fail")
+    public String fail(){
+        return "/item/fail";
     }
 }
